@@ -9,10 +9,9 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
 import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { AppRoutingModule } from './app-routing.module';
-import { SignupComponent } from './auth/signup/signup.component';
-import { SigninComponent } from './auth/signin/signin.component';
 import { RecipesModule } from './recipes/recipes.module';
 import { SharedModule } from './shared/shared.module';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -20,8 +19,6 @@ import { SharedModule } from './shared/shared.module';
     HeaderComponent,
     ShoppingListComponent,
     ShoppingEditComponent,
-    SignupComponent,
-    SigninComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +26,8 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
     HttpModule,
     RecipesModule,
-    SharedModule
+    SharedModule,
+    AuthModule
   ],
   providers: [ShoppingListService],
   bootstrap: [AppComponent]
