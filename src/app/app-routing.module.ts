@@ -1,9 +1,11 @@
 import { NgModule } from "@angular/core";
-import { RouterModule } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from "./auth/auth-guard.service";
+import { HomeComponent } from "./home/home.component";
 
-const appRoutes = [
-    { path: '', redirectTo: '/recipes', pathMatch: 'full' }    
+const appRoutes: Routes = [
+    { path: '', component: HomeComponent },
+    { path: 'recipes', loadChildren: './recipes/recipes.module#RecipesModule' } 
 ];
 
 @NgModule({
