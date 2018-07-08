@@ -30,7 +30,6 @@ export class RecipeEditComponent implements OnInit {
     }
 
     onSubmit() {
-        console.log(this.recipeForm.value);
         const newRecipe = new Recipe(
             this.recipeForm.value['name'],
             this.recipeForm.value['description'],
@@ -65,6 +64,10 @@ export class RecipeEditComponent implements OnInit {
 
     onDeleteIngredient(index: number) {
         (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);
+    }
+
+    getControls() {
+        return (<FormArray>this.recipeForm.get('ingredients')).controls;
     }
 
     private initForm() {
