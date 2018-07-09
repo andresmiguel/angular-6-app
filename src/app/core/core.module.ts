@@ -5,6 +5,9 @@ import { CommonModule } from "@angular/common";
 import { SharedModule } from "../shared/shared.module";
 import { AppRoutingModule } from "../app-routing.module";
 import { ShoppingListService } from "../shopping-list/shopping-list.service";
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { AuthInterceptor } from "../shared/auth.interceptor";
+import { LoggingInterceptor } from "../shared/logging.interceptor";
 
 @NgModule({
     declarations: [
@@ -20,7 +23,11 @@ import { ShoppingListService } from "../shopping-list/shopping-list.service";
         AppRoutingModule,
         HeaderComponent
     ],
-    providers: [ShoppingListService]
+    providers: [
+        ShoppingListService,
+        {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+        {provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true}
+    ]
 })
 export class CoreModule {
 
