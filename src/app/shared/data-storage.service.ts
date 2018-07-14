@@ -15,11 +15,11 @@ export class DataStorageService {
         private recipeService: RecipeService) {}
 
     storeRecipes() {
-        return this.httpClient.put('https://recipe-book-79319.firebaseio.com/recipes.json', this.recipeService.getRecipes());
+        return this.httpClient.put('https://recipe-book-277b9.firebaseio.com/recipes.json', this.recipeService.getRecipes());
     }
 
     fetchRecipes() {
-        this.httpClient.get<Recipe[]>('https://recipe-book-79319.firebaseio.com/recipes.json')
+        this.httpClient.get<Recipe[]>('https://recipe-book-277b9.firebaseio.com/recipes.json')
         .map((recipes) => {
             for (let recipe of recipes) {
                 if (!recipe['ingredients']) {
