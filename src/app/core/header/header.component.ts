@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
 import { Store } from '@ngrx/store';
 import * as fromAuth from '../../auth/store/auth.reducers';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Logout } from '../../auth/store/auth.actions';
 import { AppState } from '../../store/app.reducers';
 import { SaveRecipes, LoadRecipes } from '../../recipes/store/recipe.actions';

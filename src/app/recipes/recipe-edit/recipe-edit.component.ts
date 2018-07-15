@@ -5,6 +5,7 @@ import { Recipe } from '../recipe.model';
 import { Store } from '@ngrx/store';
 import { State, FeatureState } from '../store/recipe.reducers';
 import { UpdateRecipe, AddRecipe } from '../store/recipe.actions';
+import { take } from 'rxjs/operators';
 
 @Component({
     selector: 'app-recipe-edit',
@@ -80,7 +81,7 @@ export class RecipeEditComponent implements OnInit {
 
         if (this.editMode) {
             this.store.select('recipes')
-                .take(1)
+                .pipe(take(1))
                 .subscribe((recipeState: State) => {
                     const recipe = recipeState.recipes.find(r => r.id === this.recipeId);;
                     recipeName = recipe.name;

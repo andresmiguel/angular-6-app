@@ -5,9 +5,7 @@ import { Recipe } from "../recipe.model";
 import { HttpClient } from "@angular/common/http";
 import { Store } from "@ngrx/store";
 import { FeatureState, State } from "./recipe.reducers";
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/do';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class RecipeEffects {
@@ -17,26 +15,30 @@ export class RecipeEffects {
     @Effect()
     loadRecipes = this.actions$
         .ofType(LOAD_RECIPES)
-        .switchMap(() => this.httpClient.get<Recipe[]>(this.recipesUrl))
-        .map((recipes: Recipe[]) => {
-            for (let recipe of recipes) {
-                if (!recipe['ingredients']) {
-                    recipe['ingredients'] = [];
-                }
-            }                
-            return {
-                type: SET_RECIPES,
-                payload: recipes
-            };
-        });       
+        .pipe(
+            switchMap(() => this.httpClient.get<Recipe[]>(this.recipesUrl)),
+            map((recipes: Recipe[]) => {
+                for (let recipe of recipes) {
+                    if (!recipe['ingredients']) {
+                        recipe['ingredients'] = [];
+                    }
+                }                
+                return {
+                    type: SET_RECIPES,
+                    payload: recipes
+                };
+            })
+        );
 
         @Effect({dispatch: false})
         saveRequest = this.actions$
             .ofType(SAVE_RECIPES)
-            .switchMap(() => this.store.select('recipes'))
-            .switchMap((recipeState: State) => {
-                return this.httpClient.put(this.recipesUrl, recipeState.recipes);
-            });
+            .pipe(
+                switchMap(() => this.store.select('recipes')),
+                switchMap((recipeState: State) => {
+                    return this.httpClient.put(this.recipesUrl, recipeState.recipes);
+                })
+            );
 
     constructor(
             private actions$: Actions,

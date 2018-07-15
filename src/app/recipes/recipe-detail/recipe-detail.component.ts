@@ -3,11 +3,11 @@ import { Recipe } from '../recipe.model';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.reducers';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { State, FeatureState } from '../store/recipe.reducers';
 import { AddIngredients } from '../../shopping-list/store/shopping-list.actions';
 import { DeleteRecipe } from '../store/recipe.actions';
-import 'rxjs/add/operator/take';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -28,7 +28,7 @@ export class RecipeDetailComponent implements OnInit {
             (params: Params) => {
                 this.id = +params['id'];   
                 this.store.select('recipes')
-                    .take(1)
+                    .pipe(take(1))
                     .subscribe((recipeState: State) => {
                         this.recipe = recipeState.recipes.find(r => r.id === this.id);
                     });
@@ -38,7 +38,7 @@ export class RecipeDetailComponent implements OnInit {
 
     addIngredientsToShoppingList() {
         this.store.select('recipes')
-            .take(1)
+            .pipe(take(1))
             .subscribe((recipeState: State) => {
                 this.store.dispatch(new AddIngredients(this.recipe.ingredients));
             });
